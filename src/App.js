@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        this.state = {
+            films: []
+        }
+    }
+    componentDidMount() {
+        fetch("https://ghibliapi.herokuapp.com/locations")
+            .then(res => res.json())
+            .then(films => this.setState({ films }))
+            .catch(err => console.log(err));
+    }
+
+
+
+    render() {
+        return this.state.films.map(film => {
+            return <h1 > { film.title } < /h1>
+        })
+    }
 }
-
-export default App;
